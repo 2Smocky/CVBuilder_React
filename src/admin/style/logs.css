@@ -1,0 +1,167 @@
+/* === Contenedor general === */
+.table-container {
+    background: #1e1e2f;
+    padding: 20px;
+    border-radius: 12px;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* === Título de sección === */
+.table-container h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+/* === Filtros === */
+.filters input,
+.filters select,
+.filters button {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.filters input,
+.filters select {
+    background: #242437;
+    color: #fff;
+}
+
+.filters input:focus,
+.filters select:focus {
+    background: #2e2e48;
+}
+
+.filters button {
+    background: #2d7df4;
+    color: #fff;
+    cursor: pointer;
+}
+
+.filters button:hover {
+    background: #1f63c2;
+}
+
+/* === Tabla === */
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    color: #fff;
+    background: #1e1e2f;
+}
+
+.table-container thead {
+    background: #2a2a40;
+}
+
+.table-container thead th {
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 1px solid #3a3a55;
+}
+
+.table-container tbody tr {
+    transition: background 0.2s ease;
+}
+
+.table-container tbody tr:nth-child(even) {
+    background: #242437;
+}
+
+.table-container tbody tr:hover {
+    background: #2e2e48;
+}
+
+.table-container td {
+    padding: 14px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #2a2a40;
+}
+
+/* Mensaje sin resultados */
+.table-container td[colspan="4"] {
+    text-align: center;
+    color: #c7c7ff;
+}
+
+/* === Botones de paginación === */
+.table-container > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.table-container > div button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    background: #2d7df4;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.table-container > div button:hover:enabled {
+    background: #1f63c2;
+}
+
+.table-container > div button:disabled {
+    background: #3a3a55;
+    cursor: not-allowed;
+}
+
+/* ============================================================
+   === Responsive - Mobile (Tabla y filtros scrolleables)
+   ============================================================ */
+@media (max-width: 800px) {
+
+    /* Tabla scroll horizontal */
+    .table-container table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        border-radius: 8px;
+    }
+
+    .table-container td,
+    .table-container th {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    /* Título más pequeño */
+    .table-container h2 {
+        font-size: 1.5rem;
+    }
+
+    /* === Filtros responsivos === */
+    .filters {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .filters input,
+    .filters select,
+    .filters button {
+        font-size: 0.85rem;
+        padding: 8px 10px;
+        width: 100%;
+    }
+
+    .filters button {
+        margin-top: 5px;
+    }
+}
+

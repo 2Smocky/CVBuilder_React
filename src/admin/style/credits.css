@@ -1,0 +1,105 @@
+/* === Título de sección === */
+.title-seccion-admin {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #000;
+}
+
+/* === Contenedor general === */
+.credits-box {
+    background: #1e1e2f;
+    padding: 20px;
+    border-radius: 12px;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    max-width: 100%;
+}
+
+/* === Inputs === */
+.credits-box input,
+.credits-box select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #242437;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.2s;
+}
+
+.credits-box input:focus,
+.credits-box select:focus {
+    background: #2e2e48;
+}
+
+/* === Lista de usuarios === */
+.user-list {
+    max-height: 180px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background: #242437;
+    border: 1px solid #2a2a40;
+    padding: 0;
+    list-style: none;
+}
+
+.user-list li {
+    padding: 10px 12px;
+    border-bottom: 1px solid #2a2a40;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.user-list li:last-child {
+    border-bottom: none;
+}
+
+.user-list li:hover {
+    background: #2e2e48;
+}
+
+.user-list li.selected {
+    background: #3a3a55;
+    font-weight: 600;
+}
+
+/* Usuario seleccionado */
+.selected-user {
+    margin-bottom: 12px;
+    font-size: 1rem;
+    color: #c7c7ff;
+}
+
+/* === Botón principal === */
+.credits-box button {
+    width: 100%;
+    padding: 12px;
+    background: #2d7df4;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.credits-box button:hover {
+    background: #1f63c2;
+}
+
+/* === Responsive === */
+@media (max-width: 600px) {
+    .credits-box {
+        padding: 15px;
+    }
+
+    .credits-box input,
+    .credits-box select {
+        padding: 10px;
+    }
+}

@@ -1,0 +1,345 @@
+
+/* --- Paso 2: Estilos Globales --- */
+
+.cv-actions{
+    width: 1100px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cv-actions .btn{
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin: 15px 0;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.5s ease;
+    border-radius: 6px;
+    color: #fff;
+}
+
+.cv-actions .izq{
+    display: flex;
+    gap: 10px;
+}
+
+.btn-new {
+    background: #007bff;
+    border: 2px solid #007bff;
+}
+
+.btn-new img{
+    width: 16px;
+    transition: 0.5s ease;
+    height: 16px;
+}
+
+.btn-new:hover {
+    background: #0364cc00;
+    color: #007bff;
+    transform: scale(1.05);
+}
+
+.btn-new:hover img{
+    filter: invert(29%) sepia(91%) saturate(7473%) hue-rotate(203deg) brightness(95%) contrast(101%);
+}
+
+.btn-download {
+    background: #007bff;
+    border: 2px solid #007bff;
+}
+
+.btn-download:hover {
+    background: #0364cc00;
+    color: #007bff;
+    transform: scale(1.05);
+}
+
+.btn-logout {
+    background: #dc3545;
+    border: 2px solid #dc3545;
+}
+
+.btn-logout:hover {
+    background: #0364cc00;
+    color: #dc3545;
+    transform: scale(1.05);
+}
+
+.btn-save {
+    background: #0ed440;
+    border: 2px solid #0ed440;
+}
+
+.btn-save:hover {
+    background: #0364cc00;
+    color: #0ed440;
+    transform: scale(1.05);
+}
+
+.btn-restore {
+    background: #e99e12;
+    border: 2px solid #e99e12;
+} 
+
+.btn-restore:hover {
+    background: #0364cc00;
+    color: #e99e12;
+    transform: scale(1.05);
+}
+
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    /* Usamos la variable de fondo */
+    background: var(--sidebar-bg);
+    color: white;
+    padding: 40px 30px;
+    position: relative;
+}
+
+
+.profile-section {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-img {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto 20px;
+    border: 4px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-img img {
+    cursor: pointer;
+    width: 100%;
+    height: 260px;
+    object-fit: cover;       
+    object-position: center; 
+    filter: grayscale(20%);
+}
+
+.name {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.title {
+    color: #bdc3c7;
+    /* Color fijo, neutral */
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.section {
+    margin-bottom: 30px;
+}
+
+.section h3 {
+    /* Usamos la variable de color primario */
+    color: var(--primary-color);
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    /* Usamos la variable de color primario */
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 5px;
+}
+
+/* Contacto y Habilidades */
+.item-contact,
+.contact-item {
+    display: flex;
+    font-size: 14px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.item-contact img {
+    width: 15px;
+    height: 15px;
+}
+
+.contact-item::before {
+    content: '•';
+    /* Usamos la variable de color primario */
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Barras de Habilidades */
+.skill-item {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.skill-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-top: 5px;
+    overflow: hidden;
+}
+
+.skill-progress {
+    height: 100%;
+    /* Usamos la variable de gradiente de acento */
+    background: var(--accent-gradient);
+    border-radius: 4px;
+    transition: width 2s ease;
+}
+
+/* --- Main Content --- */
+.main-content {
+    padding: 40px;
+}
+
+.main-section {
+    margin-bottom: 35px;
+}
+
+.main-section h2 {
+    /* Usamos la variable de color oscuro */
+    color: var(--text-color-dark);
+    font-size: 20px;
+    margin-bottom: 20px;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.main-section h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 50px;
+    height: 3px;
+    /* Usamos la variable de gradiente de acento */
+    background: var(--accent-gradient);
+    border-radius: 2px;
+}
+
+/* Items de Experiencia/Educación (Timeline) */
+.experience-item,
+.education-item {
+    margin-bottom: 25px;
+    padding-left: 20px;
+    position: relative;
+    /* Usamos la variable de color de línea de tiempo */
+    border-left: 3px solid var(--timeline-color);
+}
+
+.experience-item::before,
+.education-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    /* Usamos la variable de color primario */
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.job-title,
+.degree-title {
+    /* Usamos la variable de color oscuro */
+    color: var(--text-color-dark);
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.company,
+.institution {
+    /* Usamos la variable de color primario */
+    color: var(--primary-color);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* ... Resto de estilos (date, description, media queries) permanecen iguales ... */
+
+.date {
+    color: #7f8c8d;
+    font-size: 13px;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+.description {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.description ul {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.description li {
+    margin-bottom: 5px;
+}
+
+.redes-item{
+    align-items: start;
+    flex-direction: column;
+}
+
+.p404-page {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    background: #1e1e2f;
+    color: #fff;
+    text-align: center;
+    padding-top: 10%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        margin: 10px;
+    }
+
+    .sidebar,
+    .main-content {
+        padding: 20px;
+    }
+
+    body {
+        padding: 10px;
+    }
+
+    .app-layout main{
+        display: none;
+    }
+
+    .p404-page {
+        display: block;
+    }
+}

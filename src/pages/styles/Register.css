@@ -1,0 +1,130 @@
+/* --- Layout base --- */
+.page-wrapper-register {
+    min-height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #e8eef7, #ffffff);
+    font-family: "Segoe UI", sans-serif;
+}
+
+/* Contenedor principal */
+.register-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+/* Caja central estilo PC */
+.register-box {
+    width: 450px;
+    background: #ffffff;
+    padding: 50px 45px;
+    border-radius: 12px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    animation: fadeIn 0.4s ease;
+}
+
+/* Textos */
+.title1 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+/* FORM */
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+}
+
+input {
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 6px rgba(0, 123, 255, 0.35);
+}
+
+/* Botón crear cuenta */
+.btn-primary {
+    background: #007bff;
+    border: none;
+    padding: 14px;
+    font-size: 17px;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.5s ease;
+}
+
+.btn-primary:hover {
+    background: #0364cc;
+    transform: scale(1.03);
+}
+
+/* Footer */
+.footer-register {
+    text-align: center;
+    padding: 12px 0;
+    font-size: 14px;
+    color: #ffffff;
+    background: #007bff;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.p404-page {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    background: #1e1e2f;
+    color: #fff;
+    text-align: center;
+    padding-top: 10%;
+}
+
+
+@media (max-width: 800px) {
+    .page-wrapper-register .register-container, .page-wrapper-register footer{
+        display: none;
+    }
+
+    .p404-page {
+        display: block;
+    }
+}

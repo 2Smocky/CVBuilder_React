@@ -1,0 +1,115 @@
+/* === Contenedor general === */
+.title-seccion-admin {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #000000;
+}
+
+/* === Tabla general === */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-family: "Inter", sans-serif;
+    background: #1e1e2f;
+    border-radius: 12px;
+    overflow: hidden;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* === Encabezados === */
+.admin-table thead {
+    background: #2a2a40;
+}
+
+.admin-table thead th {
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 1px solid #3a3a55;
+}
+
+/* === Filas === */
+.admin-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.admin-table tbody tr:nth-child(even) {
+    background: #242437;
+}
+
+.admin-table tbody tr:hover {
+    background: #2e2e48;
+}
+
+/* === Celdas === */
+.admin-table td {
+    padding: 14px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #2a2a40;
+}
+
+/* === Botones === */
+.admin-table button {
+    background: #2d7df4;
+    color: #fff;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: 0.2s;
+}
+
+.admin-table button:hover {
+    background: #1f63c2;
+}
+
+.admin-table button:nth-child(1) {
+    background: #4b2bc0; /* Bloquear */
+    width: 80px;
+}
+
+.admin-table button:nth-child(1):hover {
+    background: #4720a1;
+}
+
+/* Botón Editar */
+.admin-table button:nth-child(2) {
+    background: #b99729;
+}
+
+.admin-table button:nth-child(2):hover {
+    background: #917c1e;
+}
+
+
+/* ============================================================
+   === Responsive - Mobile (Tabla scrolleable horizontalmente)
+   ============================================================ */
+@media (max-width: 800px) {
+    .admin-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        border-radius: 8px;
+    }
+
+    .admin-table td,
+    .admin-table th {
+        padding: 10px;
+        font-size: 0.85rem;
+    }
+
+    .admin-table button {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+}
