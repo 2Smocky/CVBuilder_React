@@ -123,15 +123,7 @@
     position: relative;
     margin: 0 auto 20px;
     border: 4px solid rgba(255, 255, 255, 0.2);
-}
-
-.profile-img img {
-    cursor: pointer;
-    width: 100%;
-    height: 260px;
-    object-fit: cover;       
-    object-position: center; 
-    filter: grayscale(20%);
+    /* El filtro se puede mover aquí si se desea, por ejemplo: filter: grayscale(20%); */
 }
 
 .name {

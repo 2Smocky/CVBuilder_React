@@ -136,10 +136,19 @@ const Sidebar = ({ personal, contacto, habilidades, lenguajes, idiomas, redes, o
             <div className="profile-img" style={{ textAlign: "center", marginBottom: "15px" }}>
 
                 <label htmlFor="fotoInput">
-                    <img
-                        src={personal.foto || "/src/assets/Yo.jpg"}
-                        alt="."
-                    />
+                    {/* Usamos un div con background-image para mejor control en PDF */}
+                    <div
+                        style={{
+                            width: "100%",
+                            height: "260px",
+                            backgroundImage: `url(${personal.foto || "/src/assets/Yo.jpg"})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            cursor: "pointer"
+                        }}
+                        title="Haz clic para cambiar la foto"
+                    >
+                    </div>
                 </label>
 
                 <input
