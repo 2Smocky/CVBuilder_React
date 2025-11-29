@@ -11,6 +11,7 @@ import "../App.css";
 function App() {
     const [cvData, setCvData] = useState(initialData);
     const [theme, setTheme] = useState('theme-default');
+    const [activeDraftName, setActiveDraftName] = useState('');
 
     const {
         draftList,
@@ -25,6 +26,10 @@ function App() {
     const handleLoadDraft = async (id) => {
         await loadDraft(id);
     };
+
+    const setActiveDraft = (name) => {
+        setActiveDraftName(name);
+    }
 
     // Cuando guardes:
     const handleSaveDraft = async () => {
@@ -127,6 +132,7 @@ function App() {
     const handleResetCV = () => {
         setCvData(initialData);   // ⬅️ Restaurar datos por defecto
         resetDraftId();
+        setActiveDraftName('');
     };
 
     return (
@@ -144,11 +150,13 @@ function App() {
                     onSaveDraft={saveDraft}
                     onOpenDrafts={loadDrafts}
                     draftList={draftList}
-                    onLoadDraft={loadDraft}
+                    onLoadDraft={handleLoadDraft}
                     onDeleteDraft={deleteDraft}
 
                     onResetCV={handleResetCV}
                     resetDraftId={resetDraftId}
+                    activeDraftName={activeDraftName}
+                    setActiveDraft={setActiveDraft}
                 />
             </main>
 
@@ -160,5 +168,6 @@ function App() {
         </div>
     );
 }
+
 
 export default App;

@@ -339,7 +339,54 @@
         display: none;
     }
 
-    .p404-page {
-        display: block;
+        .p404-page {
+
+            display: block;
+
+        }
+
     }
-}
+
+    
+
+    .active-draft-message {
+
+      display: flex;
+
+      align-items: center;
+
+      padding: 10px 15px;
+
+      border: 1px solid #E69500;
+
+      border-radius: 6px;
+
+      background-color: transparent;
+
+      color: #E69500;
+
+      font-size: 0.9rem;
+
+      margin-left: 1rem;
+
+    }
+
+    
+
+    .active-draft-message .info-icon {
+
+      margin-right: 0.5rem;
+
+      filter: invert(65%) sepia(87%) saturate(1078%) hue-rotate(359deg) brightness(94%) contrast(93%);
+
+    }
+
+    
+
+    .active-draft-message strong {
+
+      font-weight: bold;
+
+    }
+
+    

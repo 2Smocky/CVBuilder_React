@@ -560,7 +560,7 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
 
 
 // --- Componente Principal CVPreview ---
-function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, draftList, onResetCV, resetDraftId }) {
+function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, draftList, onResetCV, resetDraftId, activeDraftName, setActiveDraft }) {
     const { personal, contacto, habilidades, lenguajes, idiomas, perfil, experiencia, educacion_academica, educacion_complementaria, proyectos, referencias } = cvData;
 
     return (
@@ -593,7 +593,22 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
 
                     <button
                         className="btn-download btn"
-                        onClick={handleDownloadPDF}
+                        onClick={() => {
+                            Swal.fire({
+                                title: '¿Estás seguro?',
+                                text: "Se descontará un crédito de tu cuenta para descargar el CV.",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Sí, descargar',
+                                cancelButtonText: 'Cancelar'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    handleDownloadPDF();
+                                }
+                            })
+                        }}
                     >
                         Descargar CV
                     </button>
@@ -629,13 +644,34 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                                 showCancelButton: true,
                             }).then(async (result) => {
                                 if (result.value) {
-                                    await onLoadDraft(result.value);
+                                    const draftId = result.value;
+                                    const selectedDraft = drafts.find(d => d.id == draftId);
+                                    if (selectedDraft) {
+                                        setActiveDraft(selectedDraft.titulo || `Borrador #${selectedDraft.id}`);
+                                    }
+                                    await onLoadDraft(draftId);
                                 }
                             });
                         }}
                     >
                         Restaurar borrador
                     </button>
+
+                    {activeDraftName && (
+                        <div style={{
+                            backgroundColor: 'transparent',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '5px',
+                            color: '#E69500',
+                            height: '100%'
+                        }}>
+                            <span style={{ fontSize: '1.2em' }}>&#x2139;</span>
+                            <span>
+                                Borrador activo: <strong style={{ fontWeight: 'bold' }}>{activeDraftName}</strong>
+                            </span>
+                        </div>
+                    )}
 
 
 
