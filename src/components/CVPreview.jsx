@@ -556,9 +556,24 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
 
 
 // --- Componente Principal CVPreview ---
-function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, onResetCV, resetDraftId, activeDraftName, setActiveDraft }) {
+function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, onResetCV, resetDraftId, activeDraftName, setActiveDraft, hasUnsavedChanges, setHasUnsavedChanges }) {
     const [isLoading, setIsLoading] = React.useState(false);
     const { personal, contacto, habilidades, lenguajes, idiomas, perfil, experiencia, educacion_academica, educacion_complementaria, proyectos, referencias } = cvData;
+
+    React.useEffect(() => {
+        const handleBeforeUnload = (event) => {
+            if (hasUnsavedChanges) {
+                event.preventDefault();
+                event.returnValue = '';
+            }
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
+
+        return () => {
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+        };
+    }, [hasUnsavedChanges]);
 
     return (
         <>
@@ -738,30 +753,46 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                     <button
                         className="btn-logout btn"
                         onClick={() => {
-                            Swal.fire({
-                                title: "¿Cerrar sesión?",
-                                text: "Tu sesión será cerrada",
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonText: "Sí, salir",
-                                cancelButtonText: "Cancelar"
-                            }).then(result => {
-                                if (result.isConfirmed) {
-                                    localStorage.removeItem("token");
-
-                                    Swal.fire({
-                                        title: "Sesión cerrada",
-                                        text: "Has salido correctamente",
-                                        icon: "success",
-                                        timer: 1500,
-                                        showConfirmButton: false
-                                    });
-
-                                    setTimeout(() => {
+                            if (hasUnsavedChanges) {
+                                Swal.fire({
+                                    title: "¿Tienes cambios sin guardar?",
+                                    text: "Si sales ahora, perderás los cambios no guardados.",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "Sí, salir",
+                                    cancelButtonText: "Cancelar"
+                                }).then(result => {
+                                    if (result.isConfirmed) {
+                                        localStorage.removeItem("token");
                                         window.location.href = "/login";
-                                    }, 1500);
-                                }
-                            });
+                                    }
+                                });
+                            } else {
+                                Swal.fire({
+                                    title: "¿Cerrar sesión?",
+                                    text: "Tu sesión será cerrada",
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonText: "Sí, salir",
+                                    cancelButtonText: "Cancelar"
+                                }).then(result => {
+                                    if (result.isConfirmed) {
+                                        localStorage.removeItem("token");
+
+                                        Swal.fire({
+                                            title: "Sesión cerrada",
+                                            text: "Has salido correctamente",
+                                            icon: "success",
+                                            timer: 1500,
+                                            showConfirmButton: false
+                                        });
+
+                                        setTimeout(() => {
+                                            window.location.href = "/login";
+                                        }, 1500);
+                                    }
+                                });
+                            }
                         }}
                     >
                         Cerrar sesión

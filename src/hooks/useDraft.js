@@ -2,7 +2,7 @@ import { useState } from "react";
 import { getDrafts, getDraft, saveDraft, updateDraft, deleteDraft } from "../services/draftService";
 import Swal from "sweetalert2";
 
-export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCustomTheme) {
+export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCustomTheme, setHasUnsavedChanges) {
     const [draftList, setDraftList] = useState([]);
     const [currentDraftId, setCurrentDraftId] = useState(null); // ⬅️ NUEVO
 
@@ -22,6 +22,7 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
         if (currentDraftId) {
             try {
                 await updateDraft(currentDraftId, { content: cvData, theme, customTheme });
+                setHasUnsavedChanges(false);
                 Swal.fire("Actualizado", "El borrador se actualizó exitosamente.", "success");
                 loadDrafts();
                 return;
@@ -46,7 +47,8 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
             const res = await saveDraft(titulo, { content: cvData, theme, customTheme });
 
             if (res?.id) setCurrentDraftId(res.id); // ⬅️ Guardamos el ID del borrador creado
-
+            
+            setHasUnsavedChanges(false);
             Swal.fire("Guardado", "El borrador se guardó exitosamente.", "success");
             loadDrafts();
         } catch {
@@ -63,6 +65,7 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
             if (draft.data.customTheme) setCustomTheme(draft.data.customTheme);
 
             setCurrentDraftId(id); // ⬅️ Guardar ID del borrador cargado
+            setHasUnsavedChanges(false);
 
             Swal.fire("Restaurado", "El borrador ha sido cargado.", "success");
         } catch {

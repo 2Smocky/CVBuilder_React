@@ -19,6 +19,7 @@ function App() {
         '--sidebar-text-color': '#ffffff',
     });
     const [activeDraftName, setActiveDraftName] = useState('');
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
     const {
         draftList,
@@ -27,7 +28,7 @@ function App() {
         loadDraft,
         deleteDraft,
         resetDraftId
-    } = useDraft(cvData, setCvData, theme, setTheme, customTheme, setCustomTheme);
+    } = useDraft(cvData, setCvData, theme, setTheme, customTheme, setCustomTheme, setHasUnsavedChanges);
 
     // Cuando cargues un borrador:
     const handleLoadDraft = async (id) => {
@@ -60,6 +61,7 @@ function App() {
 
     // Actualizar datos del CV
     const handleDataChange = (sectionKey, field, value, itemId = null, subSection = null) => {
+        setHasUnsavedChanges(true);
         setCvData(prevData => {
             // Referencias separadas
             if (subSection) {
@@ -91,6 +93,7 @@ function App() {
 
     // Añadir ítem
     const handleAddItem = (sectionKey) => {
+        setHasUnsavedChanges(true);
         const newItem = { id: crypto.randomUUID() };
 
         // Soporte referencias separadas
@@ -121,6 +124,7 @@ function App() {
 
     // Eliminar ítem
     const handleRemoveItem = (sectionKey, itemId) => {
+        setHasUnsavedChanges(true);
         if (sectionKey.includes(".")) {
             const [parent, child] = sectionKey.split(".");
             setCvData(prev => ({
@@ -137,6 +141,7 @@ function App() {
     };
 
     const handleResetCV = () => {
+        setHasUnsavedChanges(false);
         setCvData(initialData);   // ⬅️ Restaurar datos por defecto
         setTheme('theme-default'); // ⬅️ Restaurar tema por defecto
         setCustomTheme({
@@ -185,6 +190,8 @@ function App() {
                     resetDraftId={resetDraftId}
                     activeDraftName={activeDraftName}
                     setActiveDraft={setActiveDraft}
+                    hasUnsavedChanges={hasUnsavedChanges}
+                    setHasUnsavedChanges={setHasUnsavedChanges}
                 />
             </main>
 
