@@ -15,33 +15,51 @@ export async function getDrafts() {
 }
 
 export async function saveDraft(titulo, data) {
-    const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { 
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`,
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({ titulo, data }),
-    });
+    try {
+        const res = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({ titulo, data }),
+        });
 
-    if (!res.ok) throw new Error("Error al guardar el borrador");
-    return await res.json();
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Error al guardar el borrador");
+        }
+
+        return await res.json();
+    } catch (error) {
+        // Captura errores de red o errores lanzados desde la respuesta
+        throw new Error(error.message || "No se pudo conectar con el servidor");
+    }
 }
 
 export async function updateDraft(id, data) {
-    const res = await fetch(`${API_URL}/${id}`, {
-        method: "PUT",
-        headers: { 
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${getToken()}`,
-            "Accept": "application/json"
-        },
-        body: JSON.stringify({ data }),
-    });
+    try {
+        const res = await fetch(`${API_URL}/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${getToken()}`,
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({ data }),
+        });
 
-    if (!res.ok) throw new Error("Error al actualizar el borrador");
-    return await res.json();
+        if (!res.ok) {
+            const errorData = await res.json();
+            throw new Error(errorData.message || "Error al actualizar el borrador");
+        }
+
+        return await res.json();
+    } catch (error) {
+        // Captura errores de red o errores lanzados desde la respuesta
+        throw new Error(error.message || "No se pudo conectar con el servidor");
+    }
 }
 
 export async function getDraft(id) {

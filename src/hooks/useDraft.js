@@ -18,7 +18,6 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
     };
 
     const handleSave = async () => {
-        // Si ya existe borrador cargado → actualizar directamente sin pedir nombre
         if (currentDraftId) {
             try {
                 await updateDraft(currentDraftId, { content: cvData, theme, customTheme });
@@ -26,14 +25,13 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
                 Swal.fire("Actualizado", "El borrador se actualizó exitosamente.", "success");
                 loadDrafts();
                 return;
-            } catch {
-                Swal.fire("Error", "No se pudo actualizar el borrador.", "error");
+            } catch (error) {
+                Swal.fire("Error", error.message || "No se pudo actualizar el borrador.", "error");
                 return;
             }
         }
 
-        // Si NO hay borrador cargado → pedir nombre y crear nuevo
-        const { value: titulo } = await Swal.fire({
+        const { value: titulo, isConfirmed } = await Swal.fire({
             title: "Guardar borrador",
             input: "text",
             inputLabel: "Nombre del borrador",
@@ -41,18 +39,30 @@ export function useDraft(cvData, setCvData, theme, setTheme, customTheme, setCus
             showCancelButton: true,
         });
 
-        if (!titulo) return;
+        if (isConfirmed && titulo) {
+            Swal.fire({
+                title: "Guardando borrador...",
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+            });
 
-        try {
-            const res = await saveDraft(titulo, { content: cvData, theme, customTheme });
+            try {
+                const res = await saveDraft(titulo, { content: cvData, theme, customTheme });
 
-            if (res?.id) setCurrentDraftId(res.id); // ⬅️ Guardamos el ID del borrador creado
-            
-            setHasUnsavedChanges(false);
-            Swal.fire("Guardado", "El borrador se guardó exitosamente.", "success");
-            loadDrafts();
-        } catch {
-            Swal.fire("Error", "No se pudo guardar el borrador.", "error");
+                if (res?.draft?.id) {
+                    setCurrentDraftId(res.draft.id);
+                    setHasUnsavedChanges(false);
+                    Swal.fire("Guardado", "El borrador se guardó exitosamente.", "success");
+                    loadDrafts();
+                } else {
+                    Swal.fire("Error", res.message || "No se pudo guardar el borrador.", "error");
+                }
+            } catch (error) {
+                Swal.fire("Error", error.message || "No se pudo guardar el borrador.", "error");
+            }
         }
     };
 

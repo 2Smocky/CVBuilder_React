@@ -556,8 +556,8 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
 
 
 // --- Componente Principal CVPreview ---
-function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, onResetCV, resetDraftId, activeDraftName, setActiveDraft, hasUnsavedChanges, setHasUnsavedChanges }) {
-    const [isLoading, setIsLoading] = React.useState(false);
+function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, onResetCV, resetDraftId, activeDraftName, setActiveDraft, hasUnsavedChanges }) {
+
     const { personal, contacto, habilidades, lenguajes, idiomas, perfil, experiencia, educacion_academica, educacion_complementaria, proyectos, referencias } = cvData;
 
     React.useEffect(() => {
@@ -625,34 +625,13 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                         Descargar CV
                     </button>
 
-                    <button className="btn-save btn" onClick={async () => {
-                        setIsLoading(true);
-                        Swal.fire({
-                            title: "Guardando borrador...",
-                            didOpen: () => {
-                                Swal.showLoading();
-                            },
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            allowEnterKey: false,
-                        });
-
-                        try {
-                            await onSaveDraft();
-                            Swal.fire("Guardado", "El borrador se ha guardado correctamente.", "success");
-                        } catch (error) {
-                            Swal.fire("Error", "No se pudo guardar el borrador.", "error");
-                        } finally {
-                            setIsLoading(false);
-                        }
-                    }}>
+                    <button className="btn-save btn" onClick={onSaveDraft}>
                         Guardar borrador
                     </button>
 
                     <button
                         className="btn-restore btn"
                         onClick={async () => {
-                            setIsLoading(true);
                             Swal.fire({
                                 title: "Cargando borradores...",
                                 didOpen: () => {
@@ -660,7 +639,6 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                                 },
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
-                                allowEnterKey: false,
                             });
                             try {
                                 const drafts = await onOpenDrafts();
@@ -688,7 +666,6 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                                         const draftId = result.value;
                                         const selectedDraft = drafts.find(d => d.id == draftId);
                                         
-                                        setIsLoading(true);
                                         Swal.fire({
                                             title: "Cargando borrador...",
                                             didOpen: () => {
@@ -705,15 +682,12 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                                             }
                                             await onLoadDraft(draftId);
                                             Swal.close(); // Cierra el loading
-                                        } catch (error) {
+                                        } catch {
                                             Swal.fire("Error", "No se pudo cargar el borrador.", "error");
-                                        } finally {
-                                            setIsLoading(false);
                                         }
                                     }
                                 });
                             } finally {
-                                setIsLoading(false);
                                 // No es necesario cerrar Swal aquí, el siguiente Swal lo reemplazará
                             }
                         }}
