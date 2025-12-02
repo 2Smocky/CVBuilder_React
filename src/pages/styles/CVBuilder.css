@@ -134,7 +134,7 @@
 .sidebar {
     /* Usamos la variable de fondo */
     background: var(--sidebar-bg);
-    color: white;
+    color: var(--sidebar-text-color);
     padding: 40px 30px;
     position: relative;
 }

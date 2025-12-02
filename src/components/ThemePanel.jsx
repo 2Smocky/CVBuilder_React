@@ -131,23 +131,27 @@ function ThemePanel({ onThemeChange, currentTheme }) {
                     <div style={{ display: "grid", gap: "4px", marginTop: "8px" }}>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleCustomColorChange("--primary-color")} />
-                            <span className="tooltip">Color primario</span>
+                            <span className="tooltip">Color Botones</span>
+                        </div>
+                        <div className="theme-button-wrapper">
+                            <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleCustomColorChange("--sidebar-text-color")} />
+                            <span className="tooltip">Color Sidebar</span>
                         </div>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleCustomColorChange("--sidebar-bg")} />
-                            <span className="tooltip">Fondo de la barra lateral</span>
+                            <span className="tooltip">Fondo Sidebar</span>
                         </div>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleCustomColorChange("--text-color-dark")} />
-                            <span className="tooltip">Color del texto oscuro</span>
+                            <span className="tooltip">Color Titulos</span>
                         </div>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleGradientChange(0)} />
-                            <span className="tooltip">Color del gradiente 1</span>
+                            <span className="tooltip">Color Linea Titulos 1</span>
                         </div>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleGradientChange(1)} />
-                            <span className="tooltip">Color del gradiente 2</span>
+                            <span className="tooltip">Color Linea Titulos 1</span>
                         </div>
                     </div>
                 )}

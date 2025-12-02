@@ -1,6 +1,7 @@
 /* Tema Principal (Azul - Defecto) */
 :root {
     --primary-color: #3498db;
+    --sidebar-text-color: #ffffff;
     /* El azul brillante */
     --accent-gradient: linear-gradient(90deg, var(--primary-color), #2ecc71);
     --sidebar-bg: #2c3e50;
