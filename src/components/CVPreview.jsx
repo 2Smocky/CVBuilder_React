@@ -557,6 +557,7 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
 
 // --- Componente Principal CVPreview ---
 function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, onResetCV, resetDraftId, activeDraftName, setActiveDraft }) {
+    const [isLoading, setIsLoading] = React.useState(false);
     const { personal, contacto, habilidades, lenguajes, idiomas, perfil, experiencia, educacion_academica, educacion_complementaria, proyectos, referencias } = cvData;
 
     return (
@@ -609,45 +610,97 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
                         Descargar CV
                     </button>
 
-                    <button className="btn-save btn" onClick={onSaveDraft}>
+                    <button className="btn-save btn" onClick={async () => {
+                        setIsLoading(true);
+                        Swal.fire({
+                            title: "Guardando borrador...",
+                            didOpen: () => {
+                                Swal.showLoading();
+                            },
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                        });
+
+                        try {
+                            await onSaveDraft();
+                            Swal.fire("Guardado", "El borrador se ha guardado correctamente.", "success");
+                        } catch (error) {
+                            Swal.fire("Error", "No se pudo guardar el borrador.", "error");
+                        } finally {
+                            setIsLoading(false);
+                        }
+                    }}>
                         Guardar borrador
                     </button>
 
                     <button
                         className="btn-restore btn"
                         onClick={async () => {
-                            // 1) Cargar la lista de borradores y obtener el resultado
-                            const drafts = await onOpenDrafts(); // Asegúrate que onOpenDrafts devuelva la lista
-
-                            // 2) Validar que haya borradores
-                            if (!drafts || drafts.length === 0) {
-                                return Swal.fire({
-                                    icon: "info",
-                                    title: "Sin borradores",
-                                    text: "No tienes borradores guardados aún."
-                                });
-                            }
-
-                            // 3) Mostrar selección de borradores
+                            setIsLoading(true);
                             Swal.fire({
-                                title: 'Selecciona un borrador',
-                                input: 'select',
-                                inputOptions: drafts.reduce((acc, draft) => {
-                                    acc[draft.id] = draft.titulo || `Borrador #${draft.id}`;
-                                    return acc;
-                                }, {}),
-                                inputPlaceholder: 'Elige un borrador',
-                                showCancelButton: true,
-                            }).then(async (result) => {
-                                if (result.value) {
-                                    const draftId = result.value;
-                                    const selectedDraft = drafts.find(d => d.id == draftId);
-                                    if (selectedDraft) {
-                                        setActiveDraft(selectedDraft.titulo || `Borrador #${selectedDraft.id}`);
-                                    }
-                                    await onLoadDraft(draftId);
-                                }
+                                title: "Cargando borradores...",
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                },
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
                             });
+                            try {
+                                const drafts = await onOpenDrafts();
+
+                                if (!drafts || drafts.length === 0) {
+                                    Swal.fire({
+                                        icon: "info",
+                                        title: "Sin borradores",
+                                        text: "No tienes borradores guardados aún."
+                                    });
+                                    return;
+                                }
+
+                                Swal.fire({
+                                    title: 'Selecciona un borrador',
+                                    input: 'select',
+                                    inputOptions: drafts.reduce((acc, draft) => {
+                                        acc[draft.id] = draft.titulo || `Borrador #${draft.id}`;
+                                        return acc;
+                                    }, {}),
+                                    inputPlaceholder: 'Elige un borrador',
+                                    showCancelButton: true,
+                                }).then(async (result) => {
+                                    if (result.value) {
+                                        const draftId = result.value;
+                                        const selectedDraft = drafts.find(d => d.id == draftId);
+                                        
+                                        setIsLoading(true);
+                                        Swal.fire({
+                                            title: "Cargando borrador...",
+                                            didOpen: () => {
+                                                Swal.showLoading();
+                                            },
+                                            allowOutsideClick: false,
+                                            allowEscapeKey: false,
+                                            allowEnterKey: false,
+                                        });
+
+                                        try {
+                                            if (selectedDraft) {
+                                                setActiveDraft(selectedDraft.titulo || `Borrador #${selectedDraft.id}`);
+                                            }
+                                            await onLoadDraft(draftId);
+                                            Swal.close(); // Cierra el loading
+                                        } catch (error) {
+                                            Swal.fire("Error", "No se pudo cargar el borrador.", "error");
+                                        } finally {
+                                            setIsLoading(false);
+                                        }
+                                    }
+                                });
+                            } finally {
+                                setIsLoading(false);
+                                // No es necesario cerrar Swal aquí, el siguiente Swal lo reemplazará
+                            }
                         }}
                     >
                         Restaurar borrador
