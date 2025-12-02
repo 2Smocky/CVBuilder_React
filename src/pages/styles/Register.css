@@ -96,6 +96,16 @@ input:focus {
     background: #007bff;
 }
 
+.register-form div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.register-form div label {
+    margin-bottom: 0;
+}
+
 /* Animación */
 @keyframes fadeIn {
     from {

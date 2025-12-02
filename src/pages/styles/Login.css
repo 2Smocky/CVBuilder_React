@@ -127,6 +127,16 @@ input:focus {
     padding-top: 10%;
 }
 
+.form div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form div label {
+    margin-bottom: 0;
+}
+
 /* Animación */
 @keyframes fadeIn {
     from {

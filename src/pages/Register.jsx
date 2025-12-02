@@ -8,10 +8,45 @@ export default function Register() {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+
+    const validatePassword = (password) => {
+        const errors = [];
+        if (password.length <= 6) {
+            errors.push("La contraseña debe tener más de 6 caracteres.");
+        }
+        if (!/[A-Z]/.test(password)) {
+            errors.push("La contraseña debe contener al menos una letra mayúscula.");
+        }
+        if (!/[0-9]/.test(password)) {
+            errors.push("La contraseña debe contener al menos un número.");
+        }
+        return errors;
+    };
 
     const handleRegister = async (e) => {
         e.preventDefault();
+
+        if (password !== confirmPassword) {
+            Swal.fire({
+                title: "Error",
+                text: "Las contraseñas no coinciden.",
+                icon: "error",
+            });
+            return;
+        }
+
+        const passwordErrors = validatePassword(password);
+        if (passwordErrors.length > 0) {
+            Swal.fire({
+                title: "Error en la contraseña",
+                html: passwordErrors.join("<br>"),
+                icon: "error",
+            });
+            return;
+        }
 
         try {
             // Registrar usuario
@@ -32,8 +67,8 @@ export default function Register() {
             console.error(err);
 
             const errorMsg =
-                err?.errors
-                    ? Object.values(err.errors).flat()[0] // Primer error de Laravel
+                err?.response?.data?.errors
+                    ? Object.values(err.response.data.errors).flat()[0] // Primer error de Laravel
                     : "Error durante el registro";
 
             Swal.fire({
@@ -73,12 +108,31 @@ export default function Register() {
 
                         <label>Contraseña</label>
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             placeholder="Contraseña"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+
+                        <label>Confirmar Contraseña</label>
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            placeholder="Confirmar Contraseña"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+
+                        <div>
+                            <input
+                                type="checkbox"
+                                id="show-password"
+                                checked={showPassword}
+                                onChange={() => setShowPassword(!showPassword)}
+                            />
+                            <label htmlFor="show-password">Mostrar contraseñas</label>
+                        </div>
 
                         <button className="btn-primary" type="submit">
                             Crear cuenta

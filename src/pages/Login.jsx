@@ -7,6 +7,7 @@ import "./styles/Login.css";
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
     async function handleSubmit(e) {
@@ -46,11 +47,21 @@ export default function Login() {
 
                         <label>Contraseña</label>
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
+
+                        <div>
+                            <input
+                                type="checkbox"
+                                id="show-password"
+                                checked={showPassword}
+                                onChange={() => setShowPassword(!showPassword)}
+                            />
+                            <label htmlFor="show-password">Mostrar contraseña</label>
+                        </div>
 
                         <button type="submit" className="btn-primary">
                             Entrar
