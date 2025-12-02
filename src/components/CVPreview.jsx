@@ -1,29 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import Swal from "sweetalert2";
+import { downloadCV } from '../services/cvService';
+import { getCredits } from "../services/userService";
 
 // --- Componente rehusable para Botones de Acción (Añadir/Eliminar) ---
 const handleDownloadPDF = async () => {
     try {
-        const token = localStorage.getItem("token");
-        if (!token) throw new Error("No estás autenticado");
+        const data = await downloadCV();
 
-        // 1️⃣ Llamar al backend para verificar y descontar crédito
-        const res = await fetch("http://127.0.0.1:8000/api/cv/download", {
-            method: "POST", // asegúrate que tu backend use POST
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Accept": "application/json"
-            }
-        });
-
-        const data = await res.json();
-
-        // 2️⃣ Si no hay créditos o hubo error, mostrar alerta y salir
-        if (!res.ok) throw new Error(data.message || "No se pudo descargar el CV");
-
-        // 3️⃣ Si el usuario tiene crédito, continuar con la generación del PDF
+        // Si el usuario tiene crédito, continuar con la generación del PDF
         const cvElement = document.getElementById("cv-preview");
         if (!cvElement) return;
 
@@ -569,7 +556,7 @@ const MainContent = ({ perfil, formacion, formacion_complementaria, experiencia,
 
 
 // --- Componente Principal CVPreview ---
-function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, draftList, onResetCV, resetDraftId, activeDraftName, setActiveDraft }) {
+function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, onSaveDraft, onLoadDraft, onOpenDrafts, onResetCV, resetDraftId, activeDraftName, setActiveDraft }) {
     const { personal, contacto, habilidades, lenguajes, idiomas, perfil, experiencia, educacion_academica, educacion_complementaria, proyectos, referencias } = cvData;
 
     return (
@@ -689,6 +676,13 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
 
                 <div className="der">
                     <button
+                        className="btn-buy-credits btn"
+                        onClick={handleBuyCredits}
+                        style={{ display: 'flex', alignItems: 'center', gap: '5px' }}
+                    >
+                        <img src="/src/assets/credits.png" alt="creditos" />
+                    </button>
+                    <button
                         className="btn-logout btn"
                         onClick={() => {
                             Swal.fire({
@@ -754,5 +748,45 @@ function CVPreview({ cvData, themeClass, onDataChange, onAddItem, onRemoveItem, 
         </>
     );
 }
+
+
+// --- Función para comprar créditos ---
+const handleBuyCredits = async () => {
+    try {
+        const data = await getCredits();
+        const currentCredits = data.credits; // Asegúrate que la respuesta del backend incluya 'credits'
+
+        // 2. Mostrar un modal con la información y opciones
+        Swal.fire({
+            title: "Comprar Créditos",
+            html: `
+                <p>Actualmente tienes <strong>${currentCredits}</strong> crédito(s) disponible(s).</p>
+                <p>¿Deseas adquirir más créditos?</p>
+            `,
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonText: "Comprar más créditos",
+            cancelButtonText: "Cerrar",
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // 3. Redirigir a WhatsApp para la compra
+                const adminPhoneNumber = "573118517224";
+                const message = "Hola, quiero comprar más créditos para mi CV.";
+                const whatsappUrl = `https://wa.me/${adminPhoneNumber}?text=${encodeURIComponent(message)}`;
+                window.open(whatsappUrl, "_blank");
+            }
+        });
+
+    } catch (error) {
+        Swal.fire({
+            title: "Error",
+            text: error.message,
+            icon: "error"
+        });
+    }
+};
+
 
 export default CVPreview;

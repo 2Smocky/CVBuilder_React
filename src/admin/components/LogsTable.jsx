@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { getLogs } from "../../services/adminService";
 import "../style/logs.css";
 
@@ -14,7 +14,7 @@ export default function LogsTable() {
     // --- PAGINACIÓN ---
     const [page, setPage] = useState(1);
 
-    const loadLogs = async (applyFilters = false) => {
+    const loadLogs = useCallback(async (applyFilters = false) => {
         setLoading(true);
 
         const filters = {
@@ -36,12 +36,12 @@ export default function LogsTable() {
         } finally {
             setLoading(false);
         }
-    };
+    }, [page, search, action, date]);
 
     // Cargar logs iniciales SIN filtros
     useEffect(() => {
         loadLogs(false);
-    }, [page]);
+    }, [loadLogs]);
 
     const handleFilter = () => {
         setPage(1);

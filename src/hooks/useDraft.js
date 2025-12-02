@@ -11,7 +11,7 @@ export function useDraft(cvData, setCvData) {
             const drafts = await getDrafts();
             setDraftList(drafts);
             return drafts; // ✅ Retornar la lista
-        } catch (err) {
+        } catch {
             Swal.fire("Error", "No se pudieron cargar los borradores.", "error");
             return [];
         }

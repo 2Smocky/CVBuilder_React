@@ -11,7 +11,7 @@ export default function DashboardStats() {
             try {
                 const data = await getStats();
                 setStats(data);
-            } catch (err) {
+            } catch {
                 setError("No se pudieron cargar las estadísticas");
             }
         };

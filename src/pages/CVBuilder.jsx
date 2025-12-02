@@ -31,11 +31,6 @@ function App() {
         setActiveDraftName(name);
     }
 
-    // Cuando guardes:
-    const handleSaveDraft = async () => {
-        await saveDraft();
-    };
-
     // Cambiar tema
     const handleThemeChange = (newTheme) => {
         setTheme(newTheme);
