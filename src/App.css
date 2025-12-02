@@ -13,12 +13,14 @@
 
 .theme-default {
     --primary-color: #3498db;
+    --sidebar-text-color: #ffffff;
     /* ... el resto de variables del tema azul ... */
 }
 
 /* 🟢 Tema Verde (Ejemplo de Alternativa) */
 .theme-green {
     --primary-color: #2ecc71;
+    --sidebar-text-color: #ffffff;
     /* Nuevo color principal (verde) */
     --accent-gradient: linear-gradient(90deg, var(--primary-color), #3498db);
     /* Mantenemos un degradado interesante */
@@ -29,6 +31,7 @@
 
 /* 🔴 Tema Rojo (Ejemplo de Alternativa) */
 .theme-black {
+    --sidebar-text-color: #ffffff;
     --primary-color: #555555;
     /* Nuevo color principal (rojo) */
     --accent-gradient: linear-gradient(90deg, var(--primary-color), #585858);
@@ -40,6 +43,7 @@
 
 /* 🍂 Tema Tierra y Dorado (Cálido y Sofisticado) */
 .theme-earth {
+    --sidebar-text-color: #ffffff;
     --primary-color: #ff7418;
     /* Naranja Quemado/Terracota */
     --accent-gradient: linear-gradient(90deg, #d35400, #f1c40f);
@@ -52,6 +56,7 @@
 
 /* 💎 Tema Turquesa Zafiro (Fresco y Tecnológico) */
 .theme-sapphire {
+    --sidebar-text-color: #ffffff;
     --primary-color: #15cca7;
     /* Turquesa (Seafoam Green) */
     --accent-gradient: linear-gradient(90deg, #1abc9c, #3498db);
@@ -63,6 +68,7 @@
 
 /* 🍑 Tema Melocotón Pastel (Suave y Amigable) */
 .theme-peach {
+    --sidebar-text-color: #ffffff;
     --primary-color: #6d4e3f;
     /* Melocotón/Salmón Pastel */
     --accent-gradient: linear-gradient(90deg, #ffb794, #ff8c64);
@@ -75,6 +81,7 @@
 
 /* ⚙️ Tema Gris Carbón (Industrial y De Alto Contraste) */
 .theme-charcoal {
+    --sidebar-text-color: #ffffff;
     --primary-color: #df5343ff;
     /* Rojo Ladrillo/Alerta para destacar */
     --accent-gradient: linear-gradient(90deg, #5c5c5c, #df5343ff);
@@ -90,6 +97,7 @@
 
 /* 🌌 Tema Noche Estelar (Oscuro y Elegante) */
 .theme-night {
+    --sidebar-text-color: #ffffff;
     --primary-color: #8e44ad; /* Púrpura profundo */
     --accent-gradient: linear-gradient(90deg, #8e44ad, #2980b9); /* De púrpura a azul */
     --sidebar-bg: #2c3e50; /* Fondo oscuro */
@@ -98,6 +106,7 @@
 
 /* 🌊 Tema Océano Profundo (Azul Marino y Agua) */
 .theme-ocean {
+    --sidebar-text-color: #ffffff;
     --primary-color: #468bb9; /* Azul intenso */
     --accent-gradient: linear-gradient(90deg, #1f618d, #48c9b0); /* Azul a turquesa */
     --sidebar-bg: #154360; /* Azul muy oscuro para sidebar */
@@ -106,6 +115,7 @@
 
 /* 🌸 Tema Sakura (Rosa Suave y Pastel) */
 .theme-sakura {
+    --sidebar-text-color: #ffffff;
     --primary-color: #ff00aa; 
     --accent-gradient: linear-gradient(90deg, #9e095b, #ff00aa);
     --sidebar-bg: #9e095b; 
@@ -114,6 +124,7 @@
 
 /* 🌿 Tema Bosque (Verde Natural) */
 .theme-forest {
+    --sidebar-text-color: #ffffff;
     --primary-color: #10b655; /* Verde bosque */
     --accent-gradient: linear-gradient(90deg, #145a32, #27ae60); /* De verde oscuro a brillante */
     --sidebar-bg: #145a32; /* Fondo profundo */
@@ -122,6 +133,7 @@
 
 /* 🔥 Tema Fuego (Intenso y Llamativo) */
 .theme-fire {
+    --sidebar-text-color: #ffffff;
     --primary-color: #e74c3c; /* Rojo intenso */
     --accent-gradient: linear-gradient(90deg, #e74c3c, #f39c12); /* De rojo a naranja */
     --sidebar-bg: #943126; /* Fondo rojo oscuro */
@@ -130,6 +142,7 @@
 
 /* 🌟 Tema Oro y Marfil (Clásico y Sofisticado) */
 .theme-gold {
+    --sidebar-text-color: #ffffff;
     --primary-color: #f1c40f; /* Dorado brillante */
     --accent-gradient: linear-gradient(90deg, #f39c12, #f1c40f); /* De naranja dorado a dorado */
     --sidebar-bg: #7d6608; /* Fondo dorado oscuro */
@@ -137,6 +150,7 @@
 }
 
 .theme-custom {
+    --sidebar-text-color: #ffffff;
     --primary-color: #3498db;
     --accent-gradient: linear-gradient(90deg, #3498db, #2980b9);
     --sidebar-bg: #2471a3;

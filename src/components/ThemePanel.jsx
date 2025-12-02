@@ -1,5 +1,5 @@
 // src/components/ThemePanel.jsx
-import React from 'react';
+import React, { useEffect } from 'react';
 
 // Estilos para el tooltip y el botón
 const style = `
@@ -70,28 +70,29 @@ const themes = [
 ];
 
 
-function ThemePanel({ onThemeChange, currentTheme }) {
+function ThemePanel({ onThemeChange, currentTheme, customTheme, onCustomThemeChange }) {
 
-    const updateVariable = (variable, value) => {
-        const cv = document.getElementById("cv-preview");
-        if (cv) {
-            cv.style.setProperty(variable, value);
+    useEffect(() => {
+        if (currentTheme === 'theme-custom') {
+            const cv = document.getElementById("cv-preview");
+            if (cv) {
+                for (const [variable, value] of Object.entries(customTheme)) {
+                    cv.style.setProperty(variable, value);
+                }
+            }
         }
-    };
+    }, [customTheme, currentTheme]);
 
     const handleCustomColorChange = (variable) => (e) => {
         const color = e.target.value;
-        updateVariable(variable, color);
+        onCustomThemeChange(variable, color);
     };
 
     // Para generar gradient con 2 colores
     const handleGradientChange = (index) => (e) => {
         const color = e.target.value;
 
-        const cv = document.getElementById("cv-preview");
-
-        // Obtener el gradient actual
-        const current = getComputedStyle(cv).getPropertyValue("--accent-gradient");
+        const current = customTheme['--accent-gradient'];
 
         // Extraer colores
         const matches = current.match(/#([0-9A-F]{3,8})/gi) || ["#3498db", "2980b9"];
@@ -99,7 +100,7 @@ function ThemePanel({ onThemeChange, currentTheme }) {
 
         const newGradient = `linear-gradient(90deg, ${matches[0]}, ${matches[1]})`;
 
-        cv.style.setProperty("--accent-gradient", newGradient);
+        onCustomThemeChange('--accent-gradient', newGradient);
     };
 
     return (
@@ -127,19 +128,21 @@ function ThemePanel({ onThemeChange, currentTheme }) {
                     </div>
                 ))}
 
+
                 {currentTheme === "theme-custom" && (
                     <div style={{ display: "grid", gap: "4px", marginTop: "8px" }}>
+                        <h4>Custom</h4>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleCustomColorChange("--primary-color")} />
                             <span className="tooltip">Color Botones</span>
                         </div>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleCustomColorChange("--sidebar-text-color")} />
-                            <span className="tooltip">Color Sidebar</span>
+                            <span className="tooltip">Color Texto Barra Lateral</span>
                         </div>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleCustomColorChange("--sidebar-bg")} />
-                            <span className="tooltip">Fondo Sidebar</span>
+                            <span className="tooltip">Fondo Barra Lateral</span>
                         </div>
                         <div className="theme-button-wrapper">
                             <input style={{ cursor: "pointer", width: '100%' }} type="color" onChange={handleCustomColorChange("--text-color-dark")} />

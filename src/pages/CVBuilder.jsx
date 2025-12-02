@@ -11,6 +11,13 @@ import "../App.css";
 function App() {
     const [cvData, setCvData] = useState(initialData);
     const [theme, setTheme] = useState('theme-default');
+    const [customTheme, setCustomTheme] = useState({
+        '--primary-color': '#3498db',
+        '--sidebar-bg': '#2c3e50',
+        '--text-color-dark': '#2c3e50',
+        '--accent-gradient': 'linear-gradient(90deg, #3498db, #2980b9)',
+        '--sidebar-text-color': '#ffffff',
+    });
     const [activeDraftName, setActiveDraftName] = useState('');
 
     const {
@@ -20,7 +27,7 @@ function App() {
         loadDraft,
         deleteDraft,
         resetDraftId
-    } = useDraft(cvData, setCvData);
+    } = useDraft(cvData, setCvData, theme, setTheme, customTheme, setCustomTheme);
 
     // Cuando cargues un borrador:
     const handleLoadDraft = async (id) => {
@@ -30,6 +37,10 @@ function App() {
     const setActiveDraft = (name) => {
         setActiveDraftName(name);
     }
+
+    const handleCustomThemeChange = (variable, value) => {
+        setCustomTheme(prev => ({ ...prev, [variable]: value }));
+    };
 
     // Cambiar tema
     const handleThemeChange = (newTheme) => {
@@ -42,6 +53,7 @@ function App() {
                 cv.style.removeProperty("--sidebar-bg");
                 cv.style.removeProperty("--text-color-dark");
                 cv.style.removeProperty("--accent-gradient");
+                cv.style.removeProperty("--sidebar-text-color");
             }
         }
     };
@@ -126,6 +138,22 @@ function App() {
 
     const handleResetCV = () => {
         setCvData(initialData);   // ⬅️ Restaurar datos por defecto
+        setTheme('theme-default'); // ⬅️ Restaurar tema por defecto
+        setCustomTheme({
+            '--primary-color': '#3498db',
+            '--sidebar-bg': '#2c3e50',
+            '--text-color-dark': '#2c3e50',
+            '--accent-gradient': 'linear-gradient(90deg, #3498db, #2980b9)',
+            '--sidebar-text-color': '#ffffff',
+        });
+        const cv = document.getElementById("cv-preview");
+        if (cv) {
+            cv.style.removeProperty("--primary-color");
+            cv.style.removeProperty("--sidebar-bg");
+            cv.style.removeProperty("--text-color-dark");
+            cv.style.removeProperty("--accent-gradient");
+            cv.style.removeProperty("--sidebar-text-color");
+        }
         resetDraftId();
         setActiveDraftName('');
     };
@@ -133,7 +161,12 @@ function App() {
     return (
         <div className="app-layout">
             <main>
-                <ThemePanel onThemeChange={handleThemeChange} currentTheme={theme} />
+                <ThemePanel
+                    onThemeChange={handleThemeChange}
+                    currentTheme={theme}
+                    customTheme={customTheme}
+                    onCustomThemeChange={handleCustomThemeChange}
+                />
 
                 <CVPreview
                     cvData={cvData}
